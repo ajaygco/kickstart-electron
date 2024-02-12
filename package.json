@@ -1,14 +1,23 @@
 {
   "name": "app",
-  "private": true,
+  "private": false,
   "version": "0.1.0",
   "type": "module",
+  "main": "electron.js",
+  "build": {
+    "appId": "com.kickstart.desktop",
+    "productName": "Kickstart",
+    "directories": {
+      "output": "desktop"
+    }
+  },
   "scripts": {
-    "preview": "vite preview",
-    "start:dev": "env-cmd -f .env.development vite",
-    "build:dev": "env-cmd -f .env.development vite build",
-    "start:prod": "env-cmd -f .env.production vite",
-    "build:prod": "env-cmd -f .env.production vite build",
+    "vite:start": "IS_DEV=true vite",
+    "vite:build": "IS_DEV=false vite build",
+    "vite:preview": "IS_DEV=false vite preview",
+    "electron:start": "IS_DEV=true electron .",
+    "electron:build": "IS_DEV=false electron-builder",
+    "package": "IS_DEV=false vite build && electron-builder",
     "lint": "eslint . --ext js,jsx",
     "test": "vitest --coverage"
   },
@@ -25,7 +34,9 @@
     "@vitejs/plugin-react-swc": "^3.3.2",
     "@vitest/coverage-v8": "^1.1.0",
     "autoprefixer": "^10.4.14",
-    "env-cmd": "^10.1.0",
+    "electron": "^28.2.2",
+    "electron-builder": "^24.9.1",
+    "electron-is-dev": "^3.0.1",
     "eslint": "^8.16.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",

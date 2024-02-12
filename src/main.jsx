@@ -1,6 +1,6 @@
 // Modules
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { createRoot } from "react-dom/client";
 
 // Styles
@@ -16,8 +16,8 @@ const app = createRoot(document.getElementById("root"));
 // Render
 app.render(
   <AppErrorBoundary>
-    <BrowserRouter>
+    <HashRouter>
       <AppRouter />
-    </BrowserRouter>
+    </HashRouter>
   </AppErrorBoundary>
 );

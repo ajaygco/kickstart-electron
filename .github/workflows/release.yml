@@ -1,13 +1,14 @@
-name: Production
+name: Release
 
 on:
+  workflow_dispatch:
   release:
     types:
       - published
 
 jobs:
   main:
-    name: Build & Deploy
+    name: Release
     runs-on: ubuntu-latest
     steps:
       # Checkout
@@ -34,18 +35,29 @@ jobs:
 
       # Upload Coverage
       - name: Upload Coverage
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: coverage
           path: coverage
 
-      # Build Artifact
-      - name: Build Artifact
-        run: yarn build:prod
+      # Copy Environment Variables
+      - name: Copy Environment Variables
+        run: cp .env.production .env
 
-      # Upload Artifact
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+      # Build Package
+      - name: Build Package
+        run: bun run package
+
+      # Upload Artifact - Web
+      - name: Upload Artifact - Web
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist
+
+      # Upload Artifact - Desktop
+      - name: Upload Artifact - Desktop
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop
+          path: desktop
